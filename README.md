@@ -99,3 +99,66 @@ Route::get('/user/{user:email}', function (App\Models\User $user) {
 ```
 php artisan migrate --seed
 ```
+
+## Blade Template 
+- Definindo uma variável no UserController
+```
+    public function show() {
+        return view('user', [
+            'var' => 'definindo a variavel',
+        ]);
+    }
+```
+Usando a variável no blade template na view user
+```
+{{ $var }}
+```
+Usando funções nativas do php no blade template
+```
+{{ date('d/m/y') }}
+```
+Declarando variáveis no blade template
+```
+@php
+    $total = 80;
+    $array = [];
+    $boolean = true;
+@endphp
+```
+Usando confições no blade template
+```
+@unless ($boolean)
+    Falso    
+@endunless
+
+@if ($boolean)
+    True  
+@endif
+
+@empty($array)
+    O array está vazio jovem !
+@endempty
+
+@if($total > 100)
+    Muito caro
+@elseif ($total > 80)
+    tá ok
+@elseif ($total > 50)
+    tá barato
+@endif
+```
+Definindo uma coleção no UserControllers
+```
+    public function index() {
+        $users = User::all();
+        return view('users', [
+            'users' => $users,
+        ]);
+    }
+```
+Usando loop no blade template
+```
+@foreach ($users as $user )
+    {{ $user->name }} <br />
+@endforeach
+```
