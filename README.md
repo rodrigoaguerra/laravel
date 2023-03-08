@@ -95,9 +95,26 @@ Route::get('/user/{user:email}', function (App\Models\User $user) {
 });
 ```
 
-## Migrando o banco de dados
+## Migration
+- Migrando o banco de dados
 ```
 php artisan migrate --seed
+```
+- Executando a migration
+```
+php artisan migrate
+```
+- Voltar a migration
+```
+php artisan migrate:rollback
+```
+- Criando uma nova tabela
+```
+php artisan make:migration create_posts_table
+```
+- Adicionar uma nova coluna a tabela
+```
+php artisan make:migration add_cover_to_posts_table
 ```
 
 ## Blade Template 
@@ -109,15 +126,15 @@ php artisan migrate --seed
         ]);
     }
 ```
-Usando a variável no blade template na view user
+- Usando a variável no blade template na view user
 ```
 {{ $var }}
 ```
-Usando funções nativas do php no blade template
+- Usando funções nativas do php no blade template
 ```
 {{ date('d/m/y') }}
 ```
-Declarando variáveis no blade template
+- Declarando variáveis no blade template
 ```
 @php
     $total = 80;
@@ -125,7 +142,7 @@ Declarando variáveis no blade template
     $boolean = true;
 @endphp
 ```
-Usando confições no blade template
+- Usando confições no blade template
 ```
 @unless ($boolean)
     Falso    
@@ -147,7 +164,7 @@ Usando confições no blade template
     tá barato
 @endif
 ```
-Definindo uma coleção no UserControllers
+- Definindo uma coleção no UserControllers
 ```
     public function index() {
         $users = User::all();
@@ -156,9 +173,44 @@ Definindo uma coleção no UserControllers
         ]);
     }
 ```
-Usando loop no blade template
+- Usando loop no blade template
 ```
 @foreach ($users as $user )
     {{ $user->name }} <br />
 @endforeach
+```
+## Models
+- criando uma model
+```
+php artisan make:model Post
+```
+- criando uma model com migration
+```
+php artisan make:model Files --migration
+```
+- criando uma model com migration, controller e factory
+```
+php artisan make:model Business --migration --controller --factory
+```
+
+## Factory
+- criando uma factory
+```
+php artisan make:factory TesteFactory
+```
+
+## Eloquent
+- pegando toda a coleção de dados
+```
+$businesses = Business::all();
+```
+- pegando apenas um elemento da coleção
+```
+$business = Business::find(1);
+```
+- usando o where para pegar um elemento da coleção 
+```
+$businessWhere = Business::where('name', 'Ernser-Murphy')->get();
+
+$businessWhereFirst = Business::where('name', 'Ernser-Murphy')->first();
 ```
