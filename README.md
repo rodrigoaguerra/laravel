@@ -302,3 +302,42 @@ $post->load('user');
 ```
 protected $with = ['user'];
 ```
+# Validação
+```
+public function store(Request $request) {
+    // validation
+    $input = $request->validate([
+        'name' => 'required|string',
+        'email' =>  'required|email',
+        'address' => 'string',
+    ]);
+    
+    dd($input);
+}
+```
+# File Upload
+- Adicionar o input file
+```
+ <input type="file" name="logo" value="{{ old('logo') }}" /><br />
+```
+- Salvando o arquivo 
+```
+$file = $input['logo'];   
+
+$path = $file->store('logos', 'public');
+
+$input["logo"] = $path;
+```
+
+# Paginação
+- Adicionar paginação
+```
+public function index() {
+    $businesses = Business::paginate(5);
+    return view('businesses', compact('businesses'));
+}
+```
+- adicionar no front
+```
+{{ $businesses->links() }}
+```

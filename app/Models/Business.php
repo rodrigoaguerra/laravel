@@ -18,6 +18,7 @@ class Business extends Model
         'name',
         'email',
         'address',
+        'logo'
     ];
 
 }
