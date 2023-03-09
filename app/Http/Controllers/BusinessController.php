@@ -8,13 +8,8 @@ use Illuminate\Http\Request;
 class BusinessController extends Controller
 {
     public function index() {
-        
-        $businesses = Business::create([
-            'name' => 'Jon snow',
-            'email' => 'jon@snow.com',
-            'address'=> 'Rua a quadra b'
-        ]);
-
-        dd($businesses);
+        $businesses =  Business::find(1);
+        // $businesses->delete();
+        dd($businesses->toArray());
     }
 }

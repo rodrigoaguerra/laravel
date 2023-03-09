@@ -200,6 +200,14 @@ php artisan make:factory TesteFactory
 ```
 
 ## Eloquent
+- criando elemento 
+```
+$businesses = Business::create([
+    'name' => 'Jon',
+    'email' => 'Snow',
+    'address' => 'snow@jon.com'
+]);
+```
 - pegando toda a coleção de dados
 ```
 $businesses = Business::all();
@@ -213,4 +221,84 @@ $business = Business::find(1);
 $businessWhere = Business::where('name', 'Ernser-Murphy')->get();
 
 $businessWhereFirst = Business::where('name', 'Ernser-Murphy')->first();
+```
+- Atualizando o elementos de uma coleção
+```
+$businesses = Business::find(3)->update([
+        'name' => 'Jon',
+        'email' => 'adasd@asda',
+    ]);
+```
+```
+$businesses = Business::find(3);
+$businesses->name = 'Tiago';
+$businesses->email = 'tiago@laravel9.com';
+$businesses->address = 'Quadra C rua B';
+$businesses->save();
+```
+```
+$input = [
+    'name' => 'Jon 2',
+    'email' => 'asda@1adsd2.com'
+];
+
+$businesses = Business::find(3);
+$businesses->fill($input);
+$businesses->save();
+```
+- remover um item da coleção
+```
+$businesses =  Business::find(4);
+$businesses->delete();
+```
+## Relacionamento 
+- Na migration posts adicionar a chave estrangeira de user_id
+```
+Schema::create('posts', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')
+        ->constrained()
+        ->onDelete('CASCADE')
+        ->onUpdate('CASCADE');
+});
+```
+- De 1 para N na model Users
+```
+public function posts() {
+    return $this->hasMany(Post::class);
+}
+```
+- De N para 1 na model Posts
+```
+public function user() {
+    return $this->belongsTo(User::class);
+}
+```
+- De N para N na model User
+```
+public function teams() {
+    return $this->belongsToMany(Team::class);
+}
+- De N para N na model Team
+```
+public function users() {
+    return $this->belongsToMany(User::class);
+}
+- linka um usuario a um team
+```
+$user->teams()->attach([1,2]);
+$user->teams()->sync([2,3]);
+$user->teams()->sync([1,3]);
+$user->teams()->sync([1,3]);
+$user->teams()->syncWithoutDetaching([2]);
+$user->teams()->detach([2]);
+$user->teams()->detach([1,3]);
+```
+- Caregar a relação no controllers
+```
+$post->load('user');
+```
+- Caregar a relação pela model
+```
+protected $with = ['user'];
 ```
